@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
+  <title>{% block title %} Главная {% endblock %} - Электронная доска объявлений </title>
+</head>
+<body>
+<div class="container-fluid">
+  <div class="d-flex flex-column flex-md-row p-3 px-md-4 mb-3  bg-white border-bottom box-shadow">
+      <h5 class="mr-md-auto p-2">Design.Pro</h5>
+      </div>
+      <a class="p-2 text-dark" href="#">Регистрация</a>
+      <a class="p-2 text-dark" href="#">Вход</a>
+  </div>
+  <div class="row">
+
+
+      <nav class="col-md-auto nav flex-column">
+          <a class="nav-link root" href="{% url 'main:index'  %}">Главная</a>
+      </nav>
+
+
+      <div class="container">
+      {% block content %}
+      {% endblock %}
+      </div>
+
+
+  </div>
+
+
+
+</div>
+
+
+</body>
+</html>
