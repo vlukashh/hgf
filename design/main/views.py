@@ -5,15 +5,20 @@ from .forms import RegisterUserForm
 from django.core.signing import BadSignature
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
-from .models import AdvUser
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LogoutView
-
+from .models import AdvUser, Appli
 
 
 def index(request):
-   return render(request, 'main/index.html')
+    num_applications = Appli.objects.filter(stas__exact='П').count()
+    num_complete = Appli.objects.filter(stas__exact='В').order_by('-date')[:4]
+    context = {
+        'num_applications': num_applications,
+        'num_complete': num_complete
+    }
+    return render(request, 'main/index.html', context)
 
 
 
