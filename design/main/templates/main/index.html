@@ -1,6 +1,25 @@
 {% extends "layout/basic.html" %}
 
-
 {% block content %}
-  <h3>Вы не авторизированы </h3>
+
+    {% if user.is_authenticated %}
+    <h3>Добро пожаловать! {{user.first_name}}</h3>
+    {% if num_complete %}
+    <p>Список последних выполненных заявок:</p>
+    {% for app in num_complete %}
+        <li><strong>Дата:</strong> {{app.date_app}}</li>
+        <li><strong>Название:</strong> {{app.name_app}}</li>
+        <li><strong>Категория:</strong> {{app.category}}</li>
+        <li><img class="img" src="/media/{{ app.image_app }}"></li>
+        {% if not forloop.last %}<hr>{% endif %}
+    {% endfor %}
+    </ul>
+    {% else %}
+    <p>На данный момент выполненных заявок нет</p>
+    {% endif %}
+    <p>Количество заявок находящихся в работе: {{ num_applications }}</p>
+    {% else %}
+    <h3>Добро пожаловать!</h3>
+    <p>Для продолжения <a href="{% url 'main:login' %}">войдите</a> или <a href="{% url 'main:register' %}">зарегистрируйтесь</a></p>
+    {% endif %}
 {% endblock %}
