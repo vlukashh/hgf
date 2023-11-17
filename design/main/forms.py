@@ -46,8 +46,8 @@ class RegisterUserForm(forms.ModelForm):
    def save(self, commit=True):
        user = super().save(commit=False)
        user.set_password(self.cleaned_data['password1'])
-       user.is_active = False
-       user.is_activated = False
+       user.is_active = True
+       user.is_activated = True
        if commit:
            user.save()
        return user
@@ -55,4 +55,4 @@ class RegisterUserForm(forms.ModelForm):
 
    class Meta:
        model = AdvUser
-       fields = ('username', 'email', 'password1', 'password2', 'first_name', 'last_name', 'agree_to_processing')
+       fields = ('first_name', 'username', 'email', 'password1', 'password2', 'agree_to_processing')
