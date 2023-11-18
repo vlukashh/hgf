@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.views import LoginView
-from django.views.generic import TemplateView
+from django.views import generic
+from django.views.generic import TemplateView, DeleteView
 from .forms import RegisterUserForm, CreateAppliForm
 from django.core.signing import BadSignature
 from django.urls import reverse_lazy
@@ -77,5 +78,20 @@ class CreateAppliView(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(CreateAppliView, self).form_valid(form)
+
+class AppliListView(generic.ListView):
+    model = Appli
+    context_object_name = 'application_list'
+    template_name = 'application_list.html'
+
+class DeleteAppliView(LoginRequiredMixin, DeleteView):
+   model = Appli
+   template_name = 'main/appli_delete.html'
+   success_url = reverse_lazy('main:index')
+
+
+
+
+
 
 

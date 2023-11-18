@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import CreateAppliView
+from .views import CreateAppliView, AppliListView, DeleteAppliView
 from .views import index
 from .views import BBLoginView
 from .views import RegisterDoneView, RegisterUserView
@@ -20,4 +20,6 @@ urlpatterns = [
    path('accounts/register/activate/<str:sign>/', user_activate, name='register_activate'),
    path('accounts/profile/', profile, name='profile'),
    path('accounts/create/', CreateAppliView.as_view(), name='create_appli'),
+   path('applications/', AppliListView.as_view(), name='appli_list'),
+   path('applications/delete/<int:pk>/', DeleteAppliView.as_view(), name='appli_delete')
 ]
