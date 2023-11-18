@@ -1,14 +1,15 @@
 from django.shortcuts import render
 from django.contrib.auth.views import LoginView
 from django.views.generic import TemplateView
-from .forms import RegisterUserForm
+from .forms import RegisterUserForm, CreateAppliForm
 from django.core.signing import BadSignature
 from django.urls import reverse_lazy
-from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.views import LogoutView
 from .models import AdvUser, Appli
+from django.views.generic import CreateView
+
 
 
 def index(request):
@@ -66,3 +67,15 @@ def profile(request):
 
 class BBLogoutView(LoginRequiredMixin, LogoutView):
    template_name = 'main/logout.html'
+
+
+class CreateAppliView(CreateView):
+    form_class = CreateAppliForm
+    template_name = 'main/create_appli.html'
+    success_url = reverse_lazy('main:index')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(CreateAppliView, self).form_valid(form)
+
+

@@ -1,7 +1,7 @@
 from django.contrib.auth import password_validation
 from django.core.exceptions import ValidationError
 from django import forms
-from .models import AdvUser
+from .models import AdvUser, Appli
 
 
 
@@ -56,3 +56,8 @@ class RegisterUserForm(forms.ModelForm):
    class Meta:
        model = AdvUser
        fields = ('first_name', 'username', 'email', 'password1', 'password2', 'agree_to_processing')
+
+class CreateAppliForm(forms.ModelForm):
+    class Meta:
+        model = Appli
+        fields = ('name', 'desc', 'cat', 'image_app')
