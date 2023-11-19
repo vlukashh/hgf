@@ -59,24 +59,11 @@ class RegisterUserForm(forms.ModelForm):
 
 class CreateAppliForm(forms.ModelForm):
 
-    def clean_image(self):
-        image = self.cleaned_data.get("image")
-        image_size = image.size
-        str_file = str(image)
-        if str_file.endswith('.jpg') and image_size <= 2097152:
-            return image
-        elif str_file.endswith('.jpeg') and image_size <= 2097152:
-            return image
-        elif str_file.endswith('.png') and image_size <= 2097152:
-            return image
-        elif str_file.endswith('.bpm') and image_size <= 2097152:
-            return image
-        else:
-            raise forms.ValidationError(
-                "Ошибка: "
-                "Файл должен иметь формат: jpg, jpeg, png, bmp и размер не более 2МБ"
-            )
-        return file
+    def clean(self):
+        image = self.cleaned_data.get('image_app')
+
+        if image.size > 2097152:
+            raise ValidationError("Прикрепляемая фотография должна быть меньше чем 2МБ")
 
     class Meta:
         model = Appli

@@ -69,7 +69,21 @@ def profile(request):
 class BBLogoutView(LoginRequiredMixin, LogoutView):
    template_name = 'main/logout.html'
 
+@login_required()
+def UserProfile(request):
+    status_filter = request.GET.get('status_filter', 'all')
 
+    if status_filter == 'all':
+        application_list = Appli.objects.filter(user=request.user).order_by('-date')
+    else:
+        application_list = Appli.objects.filter(user=request.user, stas=status_filter).order_by('-date')
+
+    context = {
+        'application_list': application_list,
+        'status_filter': status_filter,
+    }
+
+    return render(request, 'main/appli_list.html', context)
 class CreateAppliView(CreateView):
     form_class = CreateAppliForm
     template_name = 'main/create_appli.html'

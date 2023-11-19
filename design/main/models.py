@@ -46,7 +46,8 @@ class Appli(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     desc = models.CharField(verbose_name="Описание", max_length=150, blank=False)
     cat = models.ForeignKey("Category", verbose_name="Категория", max_length=150, blank=False, on_delete=models.CASCADE)
-    image_app = models.ImageField(verbose_name="Фотография", upload_to='images/', blank=False)
+    image_app = models.ImageField(verbose_name="Фотография", upload_to='images/', blank=False, validators=[FileExtensionValidator(allowed_extensions=['png', 'jpg', 'jpeg', 'bmp'])])
+    user = models.ForeignKey(AdvUser, on_delete=models.CASCADE, verbose_name="Пользователь")
 
     STATUS_CHOICES = (
         ('Н', 'Новая'),
@@ -57,3 +58,5 @@ class Appli(models.Model):
     stas = models.CharField(verbose_name="Статус заявки", max_length=1, choices=STATUS_CHOICES, blank=False,
                                   default='Н')
 
+    def __str__(self):
+        return f"{self.name}, {self.cat}"
