@@ -58,5 +58,10 @@ class Appli(models.Model):
     stas = models.CharField(verbose_name="Статус заявки", max_length=1, choices=STATUS_CHOICES, blank=False,
                                   default='Н')
 
+    image_admin = models.ImageField(verbose_name="Фотография дизайна", upload_to='images_admin/', validators=[FileExtensionValidator(allowed_extensions=['png', 'jpg', 'jpeg', 'bmp'])],
+                                    help_text="Указать фото дизайна при смене статуса на 'Выполнено'", blank=True)
+
+    comment_admin = models.TextField(verbose_name="Комментарий", help_text="Указать комментарий при смене статуса на 'Принята в работу'", blank=True)
+
     def __str__(self):
         return f"{self.name}, {self.cat}"

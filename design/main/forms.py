@@ -69,3 +69,18 @@ class CreateAppliForm(forms.ModelForm):
         model = Appli
         fields = ('name', 'desc', 'cat', 'image_app')
 
+class CheckAppliForm(forms.ModelForm):
+
+    def clean(self):
+        stas = self.cleaned_data.get('stas')
+        image = self.cleaned_data.get('image_admin')
+        comment = self.cleaned_data.get('comment_admin')
+
+        if self.instance.stas != 'Н':
+            raise ValidationError("Статус можно менять только у новых заявок!")
+
+        if stas == 'В' and not image:
+            raise ValidationError("Заявке со статусом 'Выполнено' надо прикреплять фотографию дизайна!")
+
+        if stas == 'П' and not comment:
+            raise ValidationError("Заявке со статусом 'Принята в работу' надо оставлять комментарий!")
