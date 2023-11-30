@@ -1,0 +1,42 @@
+{% extends "layout/basic.html" %}
+
+{% block content %}
+    <h1>Мои заявки</h1>
+    <hr>
+
+    {% if application_list %}
+<label for="status_filter">Фильтр по статусу:</label>
+        <select name="status_filter" id="status_filter" onchange="location.href = '{% url 'main:appli_list' %}?stas=' + this.value;">
+            <option value="all" {% if status_filter == 'all' %}selected{% endif %}>Все</option>
+            <option value="Н" {% if status_filter == 'Н' %}selected{% endif %}>Новые</option>
+            <option value="П" {% if status_filter == 'П' %}selected{% endif %}>В работе</option>
+            <option value="В" {% if status_filter == 'В' %}selected{% endif %}>Выполненные</option>
+        </select>
+    <ul>
+
+      {% for app in application_list %}
+      <li>
+            <p><strong>Дата создания:</strong> {{app.date}}</p>
+            <p><strong>Название:</strong> {{app.name}}</p>
+            <p><strong>Описание:</strong> {{app.desc}}</p>
+            <p><strong>Категория:</strong> {{app.cat}}</p>
+            <p><strong>Статус заявки:</strong> {{app.stas}}</p>
+            <nav class="col-md-auto nav flex-column">
+                <a class="nav-link root" href="{% url 'main:appli_delete' pk=app.id %}">Удалить</a>
+            </nav>
+            <hr>
+
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <label for="status_filter">Фильтр по статусу:</label>
+        <select name="status_filter" id="status_filter" onchange="location.href = '{% url 'main:appli_list' %}?stas=' + this.value;">
+            <option value="all" {% if status_filter == 'all' %}selected{% endif %}>Все</option>
+            <option value="Н" {% if status_filter == 'Н' %}selected{% endif %}>Новые</option>
+            <option value="П" {% if status_filter == 'П' %}selected{% endif %}>В работе</option>
+            <option value="В" {% if status_filter == 'В' %}selected{% endif %}>Выполненные</option>
+        </select>
+<h2> у вас нету заявок</h2>
+{% endif %}
+{% endblock %}

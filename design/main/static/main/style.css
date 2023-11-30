@@ -1,0 +1,13 @@
+.root {
+   font-size: larger;
+}
+.img{
+    width: 300px;
+    max-height: 300px;
+}
+ul, ol, li{
+    list-style: none;
+}
+.container-fluid {
+    list-style: none;
+}
