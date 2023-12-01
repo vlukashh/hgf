@@ -10,7 +10,7 @@ from django.views.static import serve
 
 urlpatterns = [
    path('admin/', admin.site.urls),
-   path('', include('main.urls', namespace='')),
+   path('', include('main.urls', namespace='default')),
    path('main/', include('main.urls')),
    path('', RedirectView.as_view(url='/main/', permanent=True)),
 ]

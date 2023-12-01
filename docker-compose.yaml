@@ -1,0 +1,6 @@
+version: '2.0'
+services:
+  app:
+    build: design
+    ports:
+      - '8080:8080'
